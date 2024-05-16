@@ -23,3 +23,16 @@ deployment "production" {
   }
 }
 
+orchestrate "auto_approve" "prod_apply" {
+  check {
+    condition = context.operation == "plan" && context.plan.deployment.name == "production"
+    error_message = "Not a prod apply"
+  }
+}
+
+orchestrate "auto_approve" "development_apply" {
+  check {
+    condition = context.operation == "plan" && context.plan.deployment.name == "development"
+    error_message = "Not a development apply"
+  }
+}
